@@ -55,7 +55,7 @@ mysql -uroot zabbix < ./database/mysql/data.sql
 
 
 /bin/cp -pa /usr/local/zabbix/etc/zabbix_server.conf /usr/local/zabbix/etc/zabbix_server.conf.ori
-cat /usr/local/zabbix/etc/zabbix_server.conf | sed -e "s/# StartPollers=5/StartPollers=5/" -e "s/# StartPingers=1/StartPingers=5/" -e "s/# StartDiscoverers=1/StartDiscoverers=1/" -e "s/# StartHTTPPollers=1/StartHTTPPollers=5/" -e "s/# ListenIP=0.0.0.0/ListenIP=0.0.0.0/" -e "s/# JavaGateway=/JavaGateway=127.0.0.1/" -e "s/# JavaGatewayPort=10052/JavaGatewayPort=10052/" -e "s/# StartJavaPollers=0/StartJavaPollers=5/" > /usr/local/zabbix/etc/zabbix_server.conf.tmp
+cat /usr/local/zabbix/etc/zabbix_server.conf | sed -e "s/# StartPollers=5/StartPollers=5/" -e "s/# StartPingers=1/StartPingers=5/" -e "s/# StartDiscoverers=1/StartDiscoverers=1/" -e "s/# StartHTTPPollers=1/StartHTTPPollers=5/" -e "s/# ListenIP=0.0.0.0/ListenIP=0.0.0.0/" -e "s/# JavaGateway=/JavaGateway=127.0.0.1/" -e "s/# JavaGatewayPort=10052/JavaGatewayPort=10052/" -e "s/# StartJavaPollers=0/StartJavaPollers=5/" -e "s/# AllowRoot=0/AllowRoot=1/" > /usr/local/zabbix/etc/zabbix_server.conf.tmp
 /bin/cp -pa /usr/local/zabbix/etc/zabbix_server.conf.tmp /usr/local/zabbix/etc/zabbix_server.conf
 
 exit
