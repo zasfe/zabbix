@@ -10,7 +10,13 @@ yum groupinstall "Legacy Software Development"
 # Install All Services
 yum -y install httpd httpd-devel 
 yum -y install mysql mysql-server 
-yum -y install php php-cli php-common php-devel php-pear php-gd php-mbstring php-mysql php-xml
+yum -y install php php-cli php-common php-devel php-pear php-gd php-mbstring php-mysql php-xml php-bcmath gd
+yum -y install OpenIPMI libssh2 fping libcurl net-snmp gcc automake curl-devel net-snmp-devel OpenIPMI-devel
+
+wget ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/aevseev/CentOS_CentOS-6/x86_64/iksemel-1.4-20.1.x86_64.rpm
+wget ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/aevseev/CentOS_CentOS-6/x86_64/iksemel-devel-1.4-20.1.x86_64.rpm
+rpm -ivh iksemel-1.4-20.1.x86_64.rpm
+rpm -ivh iksemel-devel-1.4-20.1.x86_64.rpm
 
 # Start All Services
 service httpd start
@@ -40,6 +46,26 @@ yum install zabbix-server-mysql zabbix-web-mysql zabbix-agent zabbix-java-gatewa
 
 # vi /etc/httpd/conf.d/zabbix.conf
 php_value date.timezone Asia/Seoul
+
+    Alias /zabbix /var/www/html/zabbix
+    <Directory /var/www/html/zabbix/>
+      AllowOverride FileInfo AuthConfig Limit Indexes
+      Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+      <Limit GET POST OPTIONS PROPFIND>
+        Order allow,deny
+        Allow from all
+      </Limit>
+      <LimitExcept GET POST OPTIONS PROPFIND>
+        Order deny,allow
+        Deny from all
+      </LimitExcept>
+    </Directory>
+# vi /etc/php.ini
+max_execution_time = 300
+date.timezone =Asia/Seoul
+memory_limit = 1024M
+post_max_size = 32M
+max_input_time = 300
 
 service httpd restart
 
