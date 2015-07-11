@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# http://www.kasonme.com/2014/10/zabbix-tcp-connections/
+
 groupadd zabbix
 useradd -g zabbix zabbix -s /sbin/nologin
 cd /usr/local
