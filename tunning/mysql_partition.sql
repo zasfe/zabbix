@@ -1,3 +1,10 @@
+/*
+
+MySQL Database Partitioning
+To dispel some of the myths regarding Zabbix and MySQL partitioning - It is in fact supported in Zabbix 2.0 and 2.2, just not for all the tables that could previously be partitioned in 1.8. MySQL does not support partitioning on tables that use foreign keys. The history and trend tables in Zabbix 2.0 and 2.2 do not use foreign keys, therefore partitioning is allowed on those tables.
+https://www.zabbix.org/wiki/Docs/howto/mysql_partition
+
+*/
 Alter table history_text drop primary key, add index (id), drop index history_text_2, add index history_text_2 (itemid, id);
 Alter table history_log drop primary key, add index (id), drop index history_log_2, add index history_log_2 (itemid, id);
 
