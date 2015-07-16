@@ -29,7 +29,7 @@ mysql_secure_installation
 ## Step 2: Configure Yum Repository ( 2.2 LTS )
 
 cd /usr/local/src
-wget http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/2.2.9/zabbix-2.2.9.tar.gz/download
+wget -O zabbix-2.2.9.tar.gz http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/2.2.9/zabbix-2.2.9.tar.gz/download
 tar zxvf zabbix-2.2.9.tar.gz
 cd zabbix-2.2.9
 
