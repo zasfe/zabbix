@@ -44,13 +44,12 @@ touch /var/www/html/zabbix/conf/zabbix.conf.php
 chmod 755 /var/www/html/zabbix/conf/zabbix.conf.php
 chown apache.apache /var/www/html/zabbix/conf/zabbix.conf.php
 
-./configure --prefix=/usr/local/zabbix-2.2.9 --enable-server --enable-agent --enable-java --with-mysql --with-net-snmp --with-libcurl --with-libxml2 --with-unixodbc --with-openipmi --with-ssh2
+./configure --prefix=/usr/local/zabbix-2.2.9 --enable-server --enable-agent --enable-java --with-mysql --with-net-snmp --with-libcurl --with-libxml2 --with-unixodbc --with-openipmi --with-ssh2 --with-iconv
 make install
 ln -s /usr/local/zabbix-2.2.9 /usr/local/zabbix
 
-cat ./misc/init.d/fedora/core5/zabbix_server | sed -e "s/sbin/zabbix\/sbin/" > /etc/rc.d/init.d/zabbix_server
+cat ./misc/init.d/fedora/core/zabbix_server | sed -e "s/sbin/zabbix\/sbin/" > /etc/rc.d/init.d/zabbix_server
 chmod 775 /etc/rc.d/init.d/zabbix_server
-
 
 
 mysql -uroot -e "create database zabbix character set utf8"
