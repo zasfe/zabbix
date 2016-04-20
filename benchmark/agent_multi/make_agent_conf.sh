@@ -14,9 +14,10 @@ do
   HOSTNAME="zabbix_agent_${agent_num}"
   conf_file="/etc/zabbix_agent_multi/zabbix_agentd${agent_num}.conf"
 
-  echo "PidFile=/var/run/zabbix/zabbix_agentd${agent_num}.pid" > ${conf_file}
+  echo "#!/bin/bash" > ${conf_file}
+  echo "PidFile=/var/run/zabbix/zabbix_agentd${agent_num}.pid" >> ${conf_file}
   echo "LogFile=/var/log/zabbix/zabbix_agentd${agent_num}.log" >> ${conf_file}
-	echo "HOSTNAME=zabbix_agent_${agent_num}" >> ${conf_file}
+  echo "HOSTNAME=zabbix_agent_${agent_num}" >> ${conf_file}
   echo "LogFileSize=10" >> ${conf_file}
   echo "DebugLevel=0" >> ${conf_file}
   echo "Server=192.169.253.7" >> ${conf_file}
