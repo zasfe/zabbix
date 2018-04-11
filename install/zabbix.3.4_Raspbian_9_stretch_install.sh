@@ -115,7 +115,7 @@ cp -r frontends/php/* /var/www/html/zabbix/
 
 
 
-
+# https://docs.j7k6.org/raspberry-pi-zabbix/
 
 
 
