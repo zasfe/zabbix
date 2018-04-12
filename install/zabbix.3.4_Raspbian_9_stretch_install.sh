@@ -54,7 +54,7 @@ cd zabbix-3.4.8
 make install
 
 # 4.Setup Database:
-mysql -uroot -p$MYSQL_ROOT_PASSWORD << EOF
+mysql -uroot << EOF
 CREATE DATABASE zabbix CHARACTER SET utf8 COLLATE utf8_bin;
 GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost' IDENTIFIED BY 'zabbix';
 EOF
@@ -64,57 +64,26 @@ mysql -uzabbix -pzabbix zabbix < database/mysql/images.sql
 mysql -uzabbix -pzabbix zabbix < database/mysql/data.sql
 
 # Edit /usr/local/etc/zabbix_server.conf:
-DBHost=localhost
-DBName=zabbix
-DBUser=zabbix
-DBPassword=zabbix
+cp -pa conf/zabbix_server.conf /usr/local/etc/zabbix_server.conf
+sed -i 's/# DBHost=localhost/DBHost=localhost/g' /usr/local/etc/zabbix_server.conf
+sed -i 's/# DBPassword=/# DBPassword=\nDBPassword=zabbix/g' /usr/local/etc/zabbix_server.conf
 
-# Edit /etc/systemd/system/zabbix-server.service:
-[Unit]
-Description=Zabbix Server
-After=syslog.target network.target mysqld.service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/sbin/zabbix_server -c /usr/local/etc/zabbix_server.conf
-ExecReload=/usr/local/sbin/zabbix_server -R config_cache_reload
-RemainAfterExit=yes
-PIDFile=/run/zabbix/zabbix_server.pid
-
-[Install]
-WantedBy=multi-user.target
-
-
-# Edit /etc/systemd/system/zabbix-agent.service:
-[Unit]
-Description=Zabbix Agent
-After=syslog.target network.target network-online.target
-Wants=network.target network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/sbin/zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
-RemainAfterExit=yes
-PIDFile=/var/run/zabbix/zabbix_agentd.pid
-
-[Install]
-WantedBy=multi-user.target
+# Edit /usr/local/etc/zabbix_server.conf:
+cp -pa zabbix_agentd.conf /usr/local/etc/zabbix_agentd.conf
 
 
 # Enable & Start Services:
-systemctl daemon-reload
-systemctl enable zabbix-server
-systemctl enable zabbix-agent
-systemctl start zabbix-server
-systemctl start zabbix-agent
+cp -pa misc/init.d/debian/zabbix-* /etc/init.d/
 
+/etc/init.d/zabbix-server start
+/etc/init.d/zabbix-agent start
 
-Copy Frontend Files to Web-Server Document Root:
+# Copy Frontend Files to Web-Server Document Root:
 mkdir -p /var/www/html/zabbix
 cp -r frontends/php/* /var/www/html/zabbix/
 
 
-
+# referal
 # https://docs.j7k6.org/raspberry-pi-zabbix/
 
 
